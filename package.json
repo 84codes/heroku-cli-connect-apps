@@ -1,0 +1,40 @@
+{
+  "name": "heroku-cli-connect-apps",
+  "version": "0.0.0",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "heroku-plugin"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "cli-engine-heroku": "^6.0.1",
+    "cli-ux": "^2.0.5"
+  },
+  "devDependencies": {
+    "@types/execa": "^0.8.0",
+    "@types/fs-extra": "^5.0.0",
+    "@types/lodash.flatten": "^4.4.3",
+    "@types/jest": "^21.1.8",
+    "@types/node": "^8.0.58",
+    "@types/supports-color": "^3.1.0",
+    "del-cli": "^1.1.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^6.0.0",
+    "np": "^2.8.1",
+    "prettier": "^1.9.2",
+    "ts-jest": "^21.2.4",
+    "typescript": "^2.6.2"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "posttest": "prettier -l 'src/**/*.ts'",
+    "precommit": "lint-staged",
+    "prepare": "del-cli lib && tsc && del-cli \"lib/**/*.test.+(d.ts|js)\"",
+    "pretest": "tsc",
+    "test": "jest",
+    "release": "np"
+  }
+}
