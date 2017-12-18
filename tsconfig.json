@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strictNullChecks": false,
     "strict": true,
     "alwaysStrict": true,
     "module": "commonjs",
@@ -7,12 +8,17 @@
     "declaration": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": false,
     "target": "es2017",
     "lib": [
       "es7"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
     ]
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "compileOnSave": true
 }

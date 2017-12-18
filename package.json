@@ -10,31 +10,56 @@
   "license": "ISC",
   "dependencies": {
     "cli-engine-heroku": "^6.0.1",
-    "cli-ux": "^2.0.5"
+    "cli-ux": "^2.0.5",
+    "co": "^4.6.0",
+    "flow": "^0.2.3",
+    "heroku-cli-util": "^6.2.10",
+    "inquirer": "^4.0.1",
+    "jest-cli": "^22.0.0"
   },
   "devDependencies": {
     "@types/execa": "^0.8.0",
     "@types/fs-extra": "^5.0.0",
-    "@types/lodash.flatten": "^4.4.3",
+    "@types/inquirer": "0.0.36",
     "@types/jest": "^21.1.8",
+    "@types/lodash.flatten": "^4.4.3",
     "@types/node": "^8.0.58",
     "@types/supports-color": "^3.1.0",
     "del-cli": "^1.1.0",
+    "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lint-staged": "^6.0.0",
+    "nodemon": "^1.13.3",
     "np": "^2.8.1",
+    "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
     "ts-jest": "^21.2.4",
+    "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
   "main": "lib/index.js",
   "scripts": {
-    "posttest": "prettier -l 'src/**/*.ts'",
-    "precommit": "lint-staged",
-    "prepare": "del-cli lib && tsc && del-cli \"lib/**/*.test.+(d.ts|js)\"",
+    "start": "npm-run-all clean --parallel watch:build watch:server --print-label",
+    "watch:build": "tsc --watch",
+    "watch:server": "nodemon './lib/index.js' --watch './lib'",
+    "clean": "rimraf lib",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "pretest": "tsc",
     "test": "jest",
+    "precommit": "lint-staged",
+    "prepare": "del-cli lib && tsc && del-cli \"lib/**/*.test.+(d.ts|js)\"",
     "release": "np"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   }
 }
