@@ -1,6 +1,6 @@
 {
   "name": "heroku-cli-connect-apps",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "files": [
     "lib"
   ],
@@ -43,7 +43,6 @@
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "pretest": "tsc",
     "test": "jest",
-    "precommit": "lint-staged",
     "release": "np"
   },
   "jest": {
