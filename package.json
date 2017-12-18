@@ -11,9 +11,6 @@
   "dependencies": {
     "cli-engine-heroku": "^6.0.1",
     "cli-ux": "^2.0.5",
-    "co": "^4.6.0",
-    "flow": "^0.2.3",
-    "heroku-cli-util": "^6.2.10",
     "inquirer": "^4.0.1",
     "jest-cli": "^22.0.0"
   },
@@ -25,7 +22,6 @@
     "@types/lodash.flatten": "^4.4.3",
     "@types/node": "^8.0.58",
     "@types/supports-color": "^3.1.0",
-    "del-cli": "^1.1.0",
     "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
@@ -48,7 +44,6 @@
     "pretest": "tsc",
     "test": "jest",
     "precommit": "lint-staged",
-    "prepare": "del-cli lib && tsc && del-cli \"lib/**/*.test.+(d.ts|js)\"",
     "release": "np"
   },
   "jest": {
