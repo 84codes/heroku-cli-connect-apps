@@ -45,8 +45,6 @@ export default class ConnectList extends Command {
                   connections[candidateApp] = connections[candidateApp] || []
                   let connection = { from: app, to: candidateApp, env: evar, value }
                   connections.push(connection)
-                  connections.push(connection)
-                  connections.push(connection)
                 }
               })
             }

@@ -7,7 +7,8 @@ export default class ConnectApps extends Command {
   static description = 'Link apps'
   static connectMap = {
     customer: {
-      api: [{ CUSTOMER_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' }],
+      api: [{ CUSTOMER_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' },
+            { SSO_SALT_CLOUDAMQP: "${SSO_SALT}" }],
     },
     api: {
       customer: [{ API_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' }],
@@ -16,7 +17,7 @@ export default class ConnectApps extends Command {
       'ssh-monitor': ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       alarms: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       admin: [{ API_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' }, 'ELEPHANTSQL_URL'],
-      stream: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
+      stream: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL', 'SESSION_SECRET'],
     },
   }
 
