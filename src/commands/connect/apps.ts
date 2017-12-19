@@ -20,6 +20,29 @@ export default class ConnectApps extends Command {
     },
   }
 
+  static appNameToKey(name: string) {
+    return name
+      .replace(/-pr-\d+$/, '')
+      .split('-')
+      .slice(2)
+      .join('')
+  }
+
+  static connectomeReplace(value :string, config: object) {
+    return value.replace(/\$\{(\w*)\}/, (_match, p1) => {
+      return config[p1]
+    })
+  }
+
+  validateApps(apps) {
+    let validateApps = apps.map(app => {
+      return ConnectApps.appNameToKey(app)
+    })
+    if (new Set(validateApps).size !== validateApps.length) {
+      throw 'Duplicate apps selected: ' + apps
+    }
+  }
+
   async run() {
     try {
       let questions: inquirer.Question[] = []
@@ -49,15 +72,6 @@ export default class ConnectApps extends Command {
     }
   }
 
-  validateApps(apps) {
-    let validateApps = apps.map(app => {
-      return this.appNameToKey(app)
-    })
-    if (new Set(validateApps).size !== validateApps.length) {
-      throw 'Duplicate apps selected: ' + apps
-    }
-  }
-
   async connectApps(apps: string[]) {
     let appData = {}
     this.validateApps(apps)
@@ -67,20 +81,18 @@ export default class ConnectApps extends Command {
     for (let app in appData) {
       let config = appData[app]
       let appName = config['HEROKU_PARENT_APP_NAME'] || app
-      let connectome = ConnectApps.connectMap[this.appNameToKey(appName)]
+      let connectome = ConnectApps.connectMap[ConnectApps.appNameToKey(appName)]
       for (let remoteApp in appData) {
         let configPatch = {}
         let remoteAppName = appData[remoteApp]['HEROKU_PARENT_APP_NAME'] || app
-        let remoteConfig = connectome[this.appNameToKey(remoteAppName)] || []
+        let remoteConfig = connectome[ConnectApps.appNameToKey(remoteAppName)] || []
         remoteConfig.forEach(env => {
           if (typeof env === 'string') {
             configPatch[env] = config[env]
           }
           if (typeof env === 'object') {
             Object.keys(env).forEach(evar => {
-              configPatch[evar] = env[evar].replace(/\$\{(\w*)\}/, (_match, p1) => {
-                return config[p1]
-              })
+              configPatch[evar] = ConnectApps.connectomeReplace(env[evar], config)
             })
           }
         })
@@ -95,14 +107,6 @@ export default class ConnectApps extends Command {
         }
       }
     }
-  }
-
-  appNameToKey(name: string) {
-    return name
-      .replace(/-pr-\d+$/, '')
-      .split('-')
-      .slice(2)
-      .join('')
   }
 
   async getApps() {
