@@ -17,7 +17,7 @@ export default class ConnectApps extends Command {
       'ssh-monitor': ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       alarms: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       admin: [{ API_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' }, 'ELEPHANTSQL_URL'],
-      stream: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL', 'SESSION_SECRET'],
+      stream: ['SESSION_SECRET'],
     },
   }
 
