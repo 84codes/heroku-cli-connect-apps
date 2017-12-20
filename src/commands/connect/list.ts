@@ -9,6 +9,7 @@ export default class ConnectList extends Command {
   async run() {
     try {
       let apps = await this.getApps()
+      console.log(apps.join(', '))
       let appData = {}
       cli.action.start('Loading configs')
       for (let app of apps) {
@@ -33,7 +34,6 @@ export default class ConnectList extends Command {
           candidateConnectome.forEach(env => {
             if (typeof env === 'string') {
               if (candidateConfig[env] === config[env]) {
-                connections[candidateApp] = connections[candidateApp] || []
                 let connection = { from: app, to: candidateApp, env, value: config[env] }
                 connections.push(connection)
               }
@@ -42,7 +42,6 @@ export default class ConnectList extends Command {
               Object.keys(env).forEach(evar => {
                 let value = ConnectApps.connectomeReplace(env[evar], config)
                 if (value === candidateConfig[evar]) {
-                  connections[candidateApp] = connections[candidateApp] || []
                   let connection = { from: app, to: candidateApp, env: evar, value }
                   connections.push(connection)
                 }
