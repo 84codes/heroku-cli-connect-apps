@@ -19,14 +19,14 @@ export default class ConnectList extends Command {
         let config = appData[app]
         let connections = []
         let appName = config['HEROKU_PARENT_APP_NAME'] || app
-        let connectome = ConnectApps.connectMap[ConnectApps.appNameToKey(appName)]
+        let connectome = ConnectApps.fetchWithAppName(appName, ConnectApps.connectMap)
         if (connectome == null) {
           continue
         }
         for (let candidateApp in appData) {
           let candidateConfig = appData[candidateApp]
           let candidateAppName = candidateConfig['HEROKU_PARENT_APP_NAME'] || candidateApp
-          let candidateConnectome = connectome[ConnectApps.appNameToKey(candidateAppName)]
+          let candidateConnectome = ConnectApps.fetchWithAppName(candidateAppName, connectome)
           if (candidateApp == app || candidateConnectome == null) {
             continue
           }

@@ -1,4 +1,4 @@
-import ConnectApps from './apps'
+import ConnectApps from './apps';
 import {} from 'jest'
 
 test('raise if duplicate apps', () => {
@@ -9,4 +9,8 @@ test('raise if duplicate apps', () => {
 
 test('return null if valid apps', () => {
   expect(new ConnectApps().validateApps(['staging-cloudamqp-api', 'staging-cloudamqp-customer'])).toBeFalsy()
+})
+
+test('converts app names to keys', () => {
+  expect(ConnectApps.appNameToKey('staging-cloudamqp-shared-moni')).toBe('shared-moni')
 })

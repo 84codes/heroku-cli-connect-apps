@@ -17,6 +17,7 @@ export default class ConnectApps extends Command {
       'ssh-monitor': ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       alarms: ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       admin: [{ API_URL: 'https://${HEROKU_APP_NAME}.herokuapp.com' }, 'ELEPHANTSQL_URL'],
+      'shared-monitor': ['ELEPHANTSQL_URL', 'CLOUDAMQP_URL'],
       stream: ['SESSION_SECRET'],
     },
   }
@@ -26,7 +27,19 @@ export default class ConnectApps extends Command {
       .replace(/-pr-\d+$/, '')
       .split('-')
       .slice(2)
-      .join('')
+      .join('-')
+  }
+
+  static fetchWithAppName(appName: string, map: object) {
+    let appKey = ConnectApps.appNameToKey(appName) // Can be truncated, e.g. shared-mon  (itor)
+    let connectKeys = Object.keys(map).filter(key => {
+      return key.startsWith(appKey)
+    })
+    if (connectKeys.length > 1) {
+      throw "Ambiguous app name " + appName
+    }
+    let connectKey = connectKeys[0]
+    return map[connectKey]
   }
 
   static connectomeReplace(value :string, config: object) {
@@ -82,11 +95,11 @@ export default class ConnectApps extends Command {
     for (let app in appData) {
       let config = appData[app]
       let appName = config['HEROKU_PARENT_APP_NAME'] || app
-      let connectome = ConnectApps.connectMap[ConnectApps.appNameToKey(appName)]
+      let connectome = ConnectApps.fetchWithAppName(appName, ConnectApps.connectMap)
       for (let remoteApp in appData) {
         let configPatch = {}
         let remoteAppName = appData[remoteApp]['HEROKU_PARENT_APP_NAME'] || app
-        let remoteConfig = connectome[ConnectApps.appNameToKey(remoteAppName)] || []
+        let remoteConfig = ConnectApps.fetchWithAppName(remoteAppName, connectome) || []
         remoteConfig.forEach(env => {
           if (typeof env === 'string') {
             configPatch[env] = config[env]
