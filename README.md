@@ -34,36 +34,40 @@ $ npm install -g heroku-cli-connect-apps
 # Usage
 
 ```sh-session
-$ oclif-example COMMAND
+$ heroku COMMAND
 running command...
-$ oclif-example (-v|--version|version)
-heroku-cli-connect-apps/0.0.0 (darwin-x64) node-v8.6.0
-$ oclif-example --help [COMMAND]
+$ heroku (-v|--version|version)
+heroku-cli-connect-apps/1.0.0 (darwin-x64) node-v8.6.0
+$ heroku --help [COMMAND]
 USAGE
-  $ oclif-example COMMAND
+  $ heroku COMMAND
 ...
 ```
 <!-- usagestop -->
 <!-- commands -->
 # Commands
 
-* [oclif-example hello](#hello)
-## hello
+* [heroku connect:apps](#connectapps)
+* [heroku connect:list](#connectlist)
+## connect:apps
 
-Describe the command here
+Link apps
 
 ```
 USAGE
-  $ oclif-example hello
-
-OPTIONS
-  -n, --name=name  name to print
-
-DESCRIPTION
-  Describe the command here
-  ...
-  Extra documentation goes here
+  $ heroku connect:apps
 ```
 
-_See code: [src/commands/hello.js](https://github.com/baelter/heroku-cli-connect-apps/blob/v0.0.0/src/commands/hello.js)_
+_See code: [src/commands/connect/apps.js](https://github.com/84codes/heroku-cli-connect-apps/blob/v1.0.0/src/commands/connect/apps.js)_
+
+## connect:list
+
+List linked apps
+
+```
+USAGE
+  $ heroku connect:list
+```
+
+_See code: [src/commands/connect/list.js](https://github.com/84codes/heroku-cli-connect-apps/blob/v1.0.0/src/commands/connect/list.js)_
 <!-- commandsstop -->
