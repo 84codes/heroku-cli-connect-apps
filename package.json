@@ -1,0 +1,51 @@
+{
+  "name": "heroku-cli-connect-apps",
+  "version": "0.0.0",
+  "author": "Anders Bälter @baelter",
+  "bugs": "https://github.com/84codes/heroku-cli-connect-apps/issues",
+  "dependencies": {
+    "@oclif/command": "^1.3.3",
+    "@oclif/config": "^1.3.57",
+    "@oclif/errors": "^1.0.2"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.2.18",
+    "@oclif/plugin-help": "^1.1.5",
+    "@oclif/test": "^1.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.18.1",
+    "eslint-config-oclif": "^1.3.8",
+    "globby": "^8.0.1",
+    "mocha": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    ".oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/84codes/heroku-cli-connect-apps",
+  "keywords": [
+    "oclif-plugin"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "oclif-example",
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "84codes/heroku-cli-connect-apps",
+  "scripts": {
+    "clean": "rm -f .oclif.manifest.json",
+    "lint": "eslint .",
+    "postpublish": "yarn run clean",
+    "posttest": "yarn run lint",
+    "prepublishOnly": "oclif-dev manifest && oclif-dev readme",
+    "preversion": "yarn run clean",
+    "test": "mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}
