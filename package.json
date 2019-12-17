@@ -19,7 +19,7 @@
     "eslint": "^4.18.2",
     "eslint-config-oclif": "^1.3.8",
     "globby": "^8.0.1",
-    "jest": "^22.4.0",
+    "jest": "^25.0.0",
     "mocha": "^5.0.1"
   },
   "engines": {
