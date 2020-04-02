@@ -1,9 +1,0 @@
-{
-  "extends": "oclif",
-  "rules": {
-    "no-template-curly-in-string": 0
-  },
-  "env": {
-    "jest": true
-  }
-}
