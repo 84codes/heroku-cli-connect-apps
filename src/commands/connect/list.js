@@ -1,12 +1,12 @@
 // jshint ignore: start
 
-const {Command} = require('@heroku-cli/command')
+const { Command } = require('@heroku-cli/command')
 const ConnectApps = require('./apps')
 const cli = require('heroku-cli-util')
 const lib = require('../../lib')
 
 class ConnectList extends Command {
-  async run() {
+  async run () {
     try {
       let apps = await this.getApps()
       cli.log(apps.join(', '))
@@ -23,7 +23,7 @@ class ConnectList extends Command {
     }
   }
 
-  async getAppData(apps) {
+  async getAppData (apps) {
     cli.action.start('Loading configs')
     const results = []
     for (let app of apps) {
@@ -39,7 +39,7 @@ class ConnectList extends Command {
     return appData
   }
 
-  printConnections(app, connections) {
+  printConnections (app, connections) {
     if (connections.length > 0) {
       let currTo
       for (let connection of connections) {
@@ -54,7 +54,7 @@ class ConnectList extends Command {
     }
   }
 
-  findConntections(app, config, appData) {
+  findConntections (app, config, appData) {
     let connections = []
     let appName = config.HEROKU_PARENT_APP_NAME || app
     let connectome = ConnectApps.fetchWithAppName(appName, lib.connectMap)
@@ -72,7 +72,7 @@ class ConnectList extends Command {
         candidateConnectome.forEach(env => {
           if (typeof env === 'string') {
             if (candidateConfig[env] === config[env]) {
-              let connection = {from: app, to: candidateApp, env, value: config[env]}
+              let connection = { from: app, to: candidateApp, env, value: config[env] }
               connections.push(connection)
             }
           }
@@ -80,7 +80,7 @@ class ConnectList extends Command {
             Object.keys(env).forEach(evar => {
               let value = ConnectApps.connectomeReplace(env[evar], config)
               if (value === candidateConfig[evar]) {
-                let connection = {from: app, to: candidateApp, env: evar, value}
+                let connection = { from: app, to: candidateApp, env: evar, value }
                 connections.push(connection)
               }
             })
@@ -91,13 +91,13 @@ class ConnectList extends Command {
     return connections
   }
 
-  async getApps() {
+  async getApps () {
     let apps = []
     cli.action.start('Loading apps')
     let response = await this.heroku.get('/apps')
     cli.action.done()
     response.body.forEach(app => {
-      if (/-pr-/.test(app.name) || app.name.startsWith('staging')) {
+      if (/-pr-/.test(app.name) || app.name.startsWith('staging') || app.name.startsWith('build')) {
         apps.push(app.name)
       }
     })
